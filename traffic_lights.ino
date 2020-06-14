@@ -6,6 +6,8 @@
 
 LiquidCrystal_I2C lcd(0x27,2,1,0,4,5,6,7);
 
+/*Pin declaration*/
+
 int prasino_aigaiou = 11;
 int portokali_aigaiou = 12;
 int kokkino_aigaiou = 13;
@@ -29,28 +31,20 @@ void setup() {
   lcd.begin (20,4); // 16 x 2 LCD module
   lcd.setBacklightPin(3,POSITIVE); // BL, BL_POL
   lcd.setBacklight(HIGH);   
-}
-
-
-void loop() {
   digitalWrite(prasino_aigaiou, LOW);
   digitalWrite(portokali_aigaiou, LOW);
   digitalWrite(kokkino_aigaiou, HIGH );
   digitalWrite(prasino_adrianoupoleos, HIGH );
-  j=DELAY_AIGAIOU-1;
-  red_sequence();
-  digitalWrite(portokali_adrianoupoleos, LOW );
-  digitalWrite(kokkino_adrianoupoleos, HIGH );
-  digitalWrite(kokkino_aigaiou, LOW );
-  digitalWrite(prasino_aigaiou, HIGH);
-  green_sequence();
-  digitalWrite(portokali_aigaiou, LOW);
-  digitalWrite(kokkino_aigaiou, HIGH );
-  digitalWrite(kokkino_adrianoupoleos, LOW );
-  digitalWrite(prasino_adrianoupoleos, HIGH );
 }
 
-void green_sequence(){
+
+void loop() {
+  j=DELAY_AIGAIOU-1;
+  adrianoupoleos_sequence();
+  aigaiou_sequence();
+}
+
+void aigaiou_sequence(){
   digitalWrite(kokkino_pezon_adrianoupoleos, LOW);
   digitalWrite(prasino_pezon_adrianoupoleos, HIGH );
   j=DELAY_ADRIANOUPOLEOS-4;
@@ -83,9 +77,13 @@ void green_sequence(){
     lcd.print(j);
     delay(1000);
     j=j-1;}
+  digitalWrite(portokali_aigaiou, LOW);
+  digitalWrite(kokkino_aigaiou, HIGH );
+  digitalWrite(kokkino_adrianoupoleos, LOW );
+  digitalWrite(prasino_adrianoupoleos, HIGH );
   }
 
-  void red_sequence(){
+  void adrianoupoleos_sequence(){
   digitalWrite(kokkino_pezon_adrianoupoleos, HIGH);
   digitalWrite(prasino_pezon_adrianoupoleos, LOW);
   for(i=0;i<DELAY_AIGAIOU-2;i++) {
@@ -106,4 +104,8 @@ void green_sequence(){
     lcd.print(j);
     delay(1000);
     j=j-1;}
+  digitalWrite(portokali_adrianoupoleos, LOW );
+  digitalWrite(kokkino_adrianoupoleos, HIGH );
+  digitalWrite(kokkino_aigaiou, LOW );
+  digitalWrite(prasino_aigaiou, HIGH);
   }
